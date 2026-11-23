@@ -1,0 +1,269 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/inter-tight/wght.css";
+@import "@fontsource-variable/archivo/wdth.css";
+
+/* ------------------------------------------------------------------
+ * ARCO 3 — identidade
+ * Troque aqui as cores da marca. Todo o site (inclusive as cenas 3D)
+ * lê destes tokens. `data-invert` (botão "Inverter cor") troca papel/tinta.
+ * ------------------------------------------------------------------ */
+:root {
+  --paper: #efeee9;          /* off-white quente, papel de desenho */
+  --ink: #0f0f0e;            /* grafite profundo */
+  --stone: #8a8780;          /* cinza pedra — textos secundários */
+  --line-on-paper: rgb(15 15 14 / 0.1);
+  --line-on-ink: rgb(239 238 233 / 0.1);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --t-slow: 0.8s var(--ease-out-quart);
+
+  --gutter: 1rem;
+  --header-h: 3rem;
+
+  /* shadcn/ui tokens, derivados da identidade */
+  --radius: 0px;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: color-mix(in oklab, var(--ink) 6%, var(--paper));
+  --secondary-foreground: var(--ink);
+  --muted: color-mix(in oklab, var(--ink) 6%, var(--paper));
+  --muted-foreground: var(--stone);
+  --accent: color-mix(in oklab, var(--ink) 8%, var(--paper));
+  --accent-foreground: var(--ink);
+  --destructive: #b3261e;
+  --border: var(--line-on-paper);
+  --input: var(--line-on-paper);
+  --ring: var(--ink);
+}
+
+:root[data-invert="true"] {
+  --paper: #0f0f0e;
+  --ink: #efeee9;
+  --stone: #8f8c85;
+  --line-on-paper: rgb(239 238 233 / 0.12);
+  --line-on-ink: rgb(15 15 14 / 0.12);
+}
+
+@theme inline {
+  --font-sans: "Inter Tight Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Archivo Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-stone: var(--stone);
+  --color-line: var(--line-on-paper);
+  --color-line-ink: var(--line-on-ink);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+
+  --ease-arch: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.01em;
+    overflow-x: clip;
+    background: var(--paper);
+    transition: background-color 0.6s var(--ease-out-quart), color 0.6s var(--ease-out-quart);
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  img {
+    user-select: none;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@layer utilities {
+  /* Tipografia */
+  .t-label {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+  .t-small {
+    font-size: 0.8125rem;
+    line-height: 1.25;
+  }
+  .t-body {
+    font-size: clamp(1rem, 0.35vw + 0.85rem, 1.125rem);
+    line-height: 1.3;
+  }
+  .t-statement {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+  .t-title {
+    font-size: clamp(2.75rem, 6.2vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+  .t-mega {
+    font-size: clamp(4rem, 13vw, 15rem);
+    line-height: 0.82;
+    letter-spacing: -0.06em;
+  }
+  .t-wordmark {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 900;
+    line-height: 0.74;
+    letter-spacing: 0;
+  }
+
+  /* Sublinhado que se recolhe no hover (como no site de referência) */
+  .u-line {
+    position: relative;
+    display: inline-block;
+  }
+  .u-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background: currentColor;
+    transform-origin: right;
+    transition: transform var(--t-slow);
+  }
+  @media (hover: hover) {
+    .u-line:hover::after,
+    .group:hover .u-line::after {
+      transform: scaleX(0);
+    }
+  }
+
+  .u-line-in::after {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  @media (hover: hover) {
+    .u-line-in:hover::after,
+    .group:hover .u-line-in::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .u-line-in.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .tick::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.55rem;
+    width: 1px;
+    height: 0.4rem;
+    background: currentColor;
+  }
+
+  .hairline-x {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+  .hairline-y {
+    width: 1px;
+    background: currentColor;
+    opacity: 0.12;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes arco-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
