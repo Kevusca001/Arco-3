@@ -23,6 +23,8 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [ready, setReady] = useState(false)
   const mark = useRef<HTMLDivElement>(null)
+  // grão animado em tela cheia só em desktop: no celular custa quadros de scroll
+  const [grain] = useState(() => typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches)
 
   // o logotipo começa abaixo da linha e sobe, letra a letra, ao fim do preloader
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function App() {
         </main>
 
         <InvertToggle />
-        <Noise opacity={0.03} fixed blendMode="overlay" fps={18} zIndex={60} className="pointer-events-none" />
+        {grain && <Noise opacity={0.03} fixed blendMode="overlay" fps={18} zIndex={60} className="pointer-events-none" />}
       </SmoothScroll>
     </ThemeProvider>
   )

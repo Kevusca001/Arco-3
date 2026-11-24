@@ -4,6 +4,8 @@ import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
+// a barra de endereço do iOS muda a altura a cada gesto: não recalcular os gatilhos por isso
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 type Ctx = {
   lenis: Lenis | null
@@ -22,11 +24,14 @@ export function SmoothScroll({ children, paused }: { children: ReactNode; paused
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    // Em telas de toque o scroll nativo (com inércia do sistema) é mais fluido que qualquer
+    // suavização em JS — o Lenis fica só para mouse/trackpad.
+    const touch = window.matchMedia("(hover: none), (pointer: coarse)").matches
+    if (reduce || touch) return
     const instance = new Lenis({
-      duration: reduce ? 0 : 1.15,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: !reduce,
-      touchMultiplier: 1.4,
+      lerp: 0.12,
+      wheelMultiplier: 1.05,
+      smoothWheel: true,
     })
     lenisRef.current = instance
     setLenis(instance)
@@ -43,6 +48,16 @@ export function SmoothScroll({ children, paused }: { children: ReactNode; paused
     }
   }, [])
 
+  // trava o scroll durante o preloader também sem Lenis
+  useEffect(() => {
+    if (lenis) {
+      document.documentElement.style.overflow = ""
+      return
+    }
+    document.documentElement.style.overflow = paused ? "hidden" : ""
+    if (!paused) ScrollTrigger.refresh()
+  }, [lenis, paused])
+
   useEffect(() => {
     if (!lenis) return
     if (paused) lenis.stop()
@@ -54,12 +69,17 @@ export function SmoothScroll({ children, paused }: { children: ReactNode; paused
 
   const scrollTo: Ctx["scrollTo"] = (target, opts) => {
     const l = lenisRef.current
-    if (l) l.scrollTo(target, { offset: opts?.offset ?? 0, immediate: opts?.immediate, duration: 1.6 })
-    else if (typeof target === "number") window.scrollTo({ top: target })
-    else {
-      const el = typeof target === "string" ? document.querySelector(target) : target
-      el?.scrollIntoView()
+    if (l) {
+      l.scrollTo(target, { offset: opts?.offset ?? 0, immediate: opts?.immediate, duration: 1.4 })
+      return
     }
+    const behavior: ScrollBehavior = opts?.immediate ? "auto" : "smooth"
+    if (typeof target === "number") {
+      window.scrollTo({ top: target, behavior })
+      return
+    }
+    const el = typeof target === "string" ? document.querySelector(target) : target
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + (opts?.offset ?? 0), behavior })
   }
 
   return <ScrollCtx.Provider value={{ lenis, scrollTo }}>{children}</ScrollCtx.Provider>

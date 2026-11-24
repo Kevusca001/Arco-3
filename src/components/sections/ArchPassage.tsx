@@ -20,7 +20,7 @@ export function ArchPassage() {
   const labelOpacity = useTransform(p, [0, 0.12], [1, 0])
 
   return (
-    <div ref={ref} className="relative h-[240svh] bg-ink" aria-hidden="true">
+    <div ref={ref} className="relative h-[170svh] bg-ink md:h-[220svh]" aria-hidden="true">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.svg viewBox="0 0 80 100" className="absolute aspect-[4/5] h-[34svh] -translate-x-[118%] text-paper" style={{ x: leftX, opacity: sideOpacity }}>

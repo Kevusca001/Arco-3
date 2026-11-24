@@ -43,11 +43,11 @@ export function HeroBody({ ready }: { ready: boolean }) {
     <section
       ref={root}
       aria-label="Apresentação"
-      className="relative h-[calc(100svh-19.2vw*0.7-var(--header-h))] min-h-[26rem] overflow-hidden"
+      className="relative h-[calc(100svh-19.2vw*0.7-var(--header-h))] min-h-[30rem] overflow-hidden"
     >
       {/* linhas da grade */}
       <span data-vline className="absolute top-0 bottom-0 left-[12.5%] hidden w-px bg-ink/10 md:block" />
-      <span data-vline className="absolute top-0 bottom-0 left-[62.5%] w-px bg-ink/10" />
+      <span data-vline className="absolute top-0 bottom-0 left-[62.5%] hidden w-px bg-ink/10 md:block" />
 
       {/* diagonal de construção */}
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
@@ -65,8 +65,8 @@ export function HeroBody({ ready }: { ready: boolean }) {
         />
       </svg>
 
-      <div className="relative grid h-full grid-cols-8 px-[var(--gutter)] md:px-0">
-        <p className="t-label col-span-4 self-center md:col-span-2 md:col-start-2 md:pl-0">
+      <div className="relative flex h-full flex-col justify-end gap-8 px-[var(--gutter)] pb-28 md:grid md:grid-cols-8 md:gap-0 md:px-0 md:pb-0">
+        <p className="t-label md:col-span-2 md:col-start-2 md:self-center">
           {site.hero.taglineSmall.map((l) => (
             <span key={l} className="block overflow-hidden">
               <span data-line className="block">{l}</span>
@@ -74,7 +74,7 @@ export function HeroBody({ ready }: { ready: boolean }) {
           ))}
         </p>
 
-        <h1 className="t-statement col-span-8 self-center pt-24 md:col-span-3 md:col-start-6 md:pt-0 md:pl-0">
+        <h1 className="t-statement md:col-span-3 md:col-start-6 md:self-center">
           <span className="sr-only">{site.name} — </span>
           {site.hero.statement.map((l) => (
             <span key={l} className="block overflow-hidden pb-[0.06em]">

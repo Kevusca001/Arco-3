@@ -239,7 +239,7 @@ export default function ArcadeScene({
   return (
     <Canvas
       flat
-      dpr={[1, 1.75]}
+      dpr={[1, typeof window !== "undefined" && window.innerWidth < 768 ? 1.35 : 1.75]}
       frameloop={active ? "always" : "never"}
       camera={{ fov: 52, near: 0.1, far: 90, position: [0, 2, 11] }}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}

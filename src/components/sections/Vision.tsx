@@ -33,7 +33,7 @@ export function Vision() {
   const item = items[idx]
 
   return (
-    <section ref={ref} aria-label={site.vision.label} className="relative h-[360svh] bg-ink">
+    <section ref={ref} aria-label={site.vision.label} className="relative h-[270svh] bg-ink md:h-[330svh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ opacity: reliefOpacity }}>
           {mounted.current && (

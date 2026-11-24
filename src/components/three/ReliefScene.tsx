@@ -120,7 +120,7 @@ function Plane({ ink, paper }: { ink: string; paper: string }) {
 
 export default function ReliefScene({ active, ink, paper }: { active: boolean; ink: string; paper: string }) {
   return (
-    <Canvas flat dpr={[1, 1.5]} frameloop={active ? "always" : "never"} gl={{ antialias: false, alpha: false }} aria-hidden="true">
+    <Canvas flat dpr={[1, typeof window !== "undefined" && window.innerWidth < 768 ? 1.1 : 1.5]} frameloop={active ? "always" : "never"} gl={{ antialias: false, alpha: false }} aria-hidden="true">
       <Plane ink={ink} paper={paper} />
     </Canvas>
   )

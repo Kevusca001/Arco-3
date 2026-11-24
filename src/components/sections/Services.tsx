@@ -25,7 +25,7 @@ export function Services() {
 
   return (
     <section id="servicos" aria-label="Serviços" className="relative bg-ink text-paper">
-      <div className="px-[var(--gutter)] pt-28 md:pt-36">
+      <div className="px-[var(--gutter)] pt-24 md:pt-36">
         <h2 className="uppercase">
           <SplitText
             text={`${s.we} ${s.do}`}
@@ -41,13 +41,13 @@ export function Services() {
         </h2>
       </div>
 
-      <div ref={ref} className="relative" style={{ height: `${s.items.length * 85}svh` }}>
+      <div ref={ref} className="relative h-[calc(var(--n)*62svh)] md:h-[calc(var(--n)*85svh)]" style={{ ["--n" as string]: s.items.length }}>
         <div className="sticky top-0 h-[100svh] overflow-hidden">
-          <span className="absolute top-[42%] right-0 left-0 h-px bg-paper/12" />
+          <span className="absolute top-[26%] right-0 left-0 h-px bg-paper/12 md:top-[42%]" />
           <span className="absolute top-0 bottom-0 left-[50%] hidden w-px bg-paper/10 md:block" />
 
           {/* trilho de nomes */}
-          <div className="absolute top-[42%] left-0 w-full -translate-y-full pb-3">
+          <div className="absolute top-[26%] left-0 w-full -translate-y-full pb-3 md:top-[42%]">
             <motion.ul
               className="flex whitespace-nowrap"
               animate={{ x: railX }}
@@ -68,7 +68,7 @@ export function Services() {
           </div>
 
           {/* descrição */}
-          <div className="absolute top-[calc(42%+1rem)] grid w-full grid-cols-8 px-[var(--gutter)] md:px-0">
+          <div className="absolute top-[calc(26%+1rem)] grid w-full grid-cols-8 px-[var(--gutter)] md:top-[calc(42%+1rem)] md:px-0">
             <AnimatePresence mode="wait">
               <motion.p
                 key={item.title}
@@ -84,7 +84,7 @@ export function Services() {
           </div>
 
           {/* prancha */}
-          <div className="absolute top-[calc(42%+7.5rem)] bottom-14 left-[var(--gutter)] w-[min(70vw,20rem)] md:top-[42%] md:bottom-auto md:left-[50%] md:h-[50svh] md:w-[25vw]">
+          <div className="absolute top-[calc(26%+7rem)] bottom-14 left-[var(--gutter)] w-[min(70vw,20rem)] md:top-[42%] md:bottom-auto md:left-[50%] md:h-[50svh] md:w-[25vw]">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={item.title}

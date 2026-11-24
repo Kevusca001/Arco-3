@@ -22,7 +22,7 @@ export function Approach() {
 function Intro() {
   const a = site.approach
   return (
-    <div className="relative grid min-h-[100svh] grid-cols-8 content-center gap-y-10 px-[var(--gutter)] py-32 md:px-0">
+    <div className="relative grid grid-cols-8 content-center gap-y-8 px-[var(--gutter)] pt-24 pb-16 md:min-h-[100svh] md:gap-y-10 md:py-32 md:px-0">
       <span className="absolute top-0 bottom-0 left-[12.5%] hidden w-px bg-ink/10 md:block" />
       <p className="t-label col-span-8 text-stone md:col-span-1 md:col-start-2">{a.label}</p>
       <h2 className="col-span-8 md:col-span-6 md:col-start-2">
@@ -56,20 +56,21 @@ function Principles() {
   const item = items[idx]
 
   return (
-    <div ref={ref} className="relative" style={{ height: `${items.length * 110}svh` }}>
+    <div ref={ref} className="relative h-[calc(var(--n)*75svh)] md:h-[calc(var(--n)*105svh)]" style={{ ["--n" as string]: items.length }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <span className="absolute top-1/2 right-0 left-0 h-px bg-ink/10" />
+        <span className="absolute top-[calc(var(--header-h)+40svh+1.75rem)] right-0 left-0 h-px bg-ink/10 md:top-1/2" />
         <span className="absolute top-0 bottom-0 left-[50%] hidden w-px bg-ink/10 md:block" />
 
         {/* prancha central */}
-        <div className="absolute top-[calc(var(--header-h)+1.5rem)] left-1/2 h-[42svh] w-[min(64vw,22rem)] -translate-x-1/2 md:top-1/2 md:h-[74svh] md:w-[min(26vw,26rem)] md:-translate-y-1/2">
-          {items.map((it, i) => (
-            <Board key={it.key} index={i} total={items.length} progress={p} kind={it.drawing} />
-          ))}
+        <div className="absolute top-[calc(var(--header-h)+1rem)] left-1/2 h-[40svh] w-[min(64vw,22rem)] -translate-x-1/2 md:top-1/2 md:h-[74svh] md:w-[min(26vw,26rem)] md:-translate-y-1/2">
+          {items.map((it, i) =>
+            // só a prancha ativa e as vizinhas ficam montadas (centenas de traços ligados ao scroll)
+            Math.abs(i - idx) <= 1 ? <Board key={it.key} index={i} total={items.length} progress={p} kind={it.drawing} /> : null,
+          )}
         </div>
 
         {/* título */}
-        <div className="absolute inset-x-0 top-[calc(50%+1.25rem)] grid grid-cols-8 px-[var(--gutter)] md:top-auto md:bottom-1/2 md:px-0 md:pb-6">
+        <div className="absolute inset-x-0 top-[calc(var(--header-h)+40svh+2.75rem)] grid grid-cols-8 px-[var(--gutter)] md:top-auto md:bottom-1/2 md:px-0 md:pb-6">
           <div className="relative col-span-8 h-[2.05em] overflow-hidden text-[clamp(2.4rem,4.4vw,4.6rem)] leading-[1] tracking-[-0.045em] md:col-span-3 md:text-right">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.h3
@@ -108,7 +109,7 @@ function Principles() {
         </div>
 
         {/* texto */}
-        <div className="absolute inset-x-0 bottom-14 grid grid-cols-8 px-[var(--gutter)] md:bottom-10 md:px-0">
+        <div className="absolute inset-x-0 top-[calc(var(--header-h)+40svh+2.75rem+4.92rem+1.25rem)] grid grid-cols-8 px-[var(--gutter)] md:top-auto md:bottom-10 md:px-0">
           <AnimatePresence mode="wait">
             <motion.p
               key={item.key}

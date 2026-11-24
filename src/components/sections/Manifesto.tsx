@@ -28,7 +28,7 @@ export function Manifesto() {
   const weOpacity = useTransform(scrollYProgress, [0.8, 0.86], [0, 1])
 
   return (
-    <section id="filosofia" ref={ref} aria-label="Filosofia" className="relative h-[620svh] bg-ink text-paper">
+    <section id="filosofia" ref={ref} aria-label="Filosofia" className="relative h-[430svh] bg-ink text-paper md:h-[560svh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <motion.div className="absolute inset-0" style={{ opacity: canvasOpacity }}>
           {mounted.current && (
